@@ -8,12 +8,42 @@
     Title="To-Do List"
     Width="350"
     Height="450"
-    Background="#151719"
+    Background="#FF151719"
     Icon="/Assets/app-icon.png"
     ResizeMode="CanMinimize"
     mc:Ignorable="av">
 
-    <Grid>
+    <!--  Define custom styles for the Menu  -->
+    <Window.Resources>
+        <!--  Style for the Menu  -->
+        <Style TargetType="Menu">
+            <Setter Property="Background" Value="#353739" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#454749" />
+            <Setter Property="FontFamily" Value="Bahnschrift SemiLight Light" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+
+        <!--  Style for MenuItem  -->
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#353739" />
+            <Setter Property="Foreground" Value="White" />
+
+            <Setter Property="FontFamily" Value="Bahnschrift SemiLight Light" />
+
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!--  Menu Bar at the top  -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Click="SaveTasksButton_Click" Header="Save Tasks" />
+                <MenuItem Click="LoadTasksButton_Click" Header="Load Tasks" />
+            </MenuItem>
+        </Menu>
+
+        <!--  Main Content  -->
         <StackPanel Margin="20">
             <!--  Task Input Box with modern style  -->
             <xctk:WatermarkTextBox
@@ -116,6 +146,7 @@
                 </Button.Template>
             </Button>
 
+
             <!--  Task List with modern style and cross icon  -->
             <ListBox
                 x:Name="TaskList"
@@ -198,18 +229,17 @@
                                 Width="20"
                                 Height="20"
                                 Margin="5,0,0,0"
-                                
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Cursor="Hand"
                                 MouseLeftButtonUp="RemoveTaskTextBlock_Click"
                                 Source="/Assets/delete.png" />
-                                
+
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
             </ListBox>
         </StackPanel>
-    </Grid>
+    </DockPanel>
 </Window>
