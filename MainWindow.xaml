@@ -1,0 +1,215 @@
+﻿<Window
+    x:Class="ToDoListApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    Title="To-Do List"
+    Width="350"
+    Height="450"
+    Background="#151719"
+    Icon="/Assets/app-icon.png"
+    ResizeMode="CanMinimize"
+    mc:Ignorable="av">
+
+    <Grid>
+        <StackPanel Margin="20">
+            <!--  Task Input Box with modern style  -->
+            <xctk:WatermarkTextBox
+                x:Name="TaskInput"
+                Width="280"
+                Margin="0,10,0,10"
+                Padding="10,5"
+                VerticalAlignment="Center"
+                Background="#353739"
+                BorderBrush="#454749"
+                BorderThickness="2"
+                FontFamily="Bahnschrift"
+                FontSize="14"
+                Foreground="White"
+                KeyDown="TaskInput_KeyDown"
+                SelectionBrush="{x:Null}"
+                Watermark="Add a new task...">
+                <xctk:WatermarkTextBox.WatermarkTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            FontStyle="Italic"
+                            Foreground="#888888"
+                            Text="{Binding}" />
+                    </DataTemplate>
+                </xctk:WatermarkTextBox.WatermarkTemplate>
+                <xctk:WatermarkTextBox.Template>
+                    <ControlTemplate TargetType="xctk:WatermarkTextBox">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5">
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </xctk:WatermarkTextBox.Template>
+                <xctk:WatermarkTextBox.Style>
+                    <Style TargetType="xctk:WatermarkTextBox">
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="CaretBrush" Value="White" />
+                        <Setter Property="SelectionBrush" Value="#555759" />
+                        <Setter Property="SelectionOpacity" Value="0.5" />
+                        <Style.Triggers>
+                            <!--  Hover effect  -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#555759" />
+                            </Trigger>
+                            <!--  Focus effect  -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#555759" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </xctk:WatermarkTextBox.Style>
+            </xctk:WatermarkTextBox>
+
+            <!--  Add Task Button with Border and CornerRadius  -->
+            <Button
+                Width="250"
+                Height="40"
+                Margin="0,10,0,10"
+                Background="#353739"
+                BorderBrush="#454749"
+                BorderThickness="2"
+                Click="AddTaskButton_Click"
+                Content="Add Task"
+                Cursor="Hand"
+                FontFamily="Bahnschrift SemiLight Condensed"
+                FontSize="16"
+                Foreground="White">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="20">
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                TextBlock.Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!--  Hover effect  -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#454749" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#555759" />
+                            </Trigger>
+                            <!--  Pressed effect  -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#555759" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#656769" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <!--  Task List with modern style and cross icon  -->
+            <ListBox
+                x:Name="TaskList"
+                Width="290"
+                Height="224"
+                Margin="0,10"
+                av:ItemsSource="{av:SampleData ItemCount=5}"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                FontFamily="Bahnschrift"
+                KeyDown="TaskInput_KeyDown">
+
+
+                <!--  Custom ListBox Template  -->
+                <ListBox.Template>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5">
+                            <ScrollViewer>
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ListBox.Template>
+
+                <!--  Custom ListBox Style  -->
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Padding" Value="5" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border
+                                        x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="5">
+                                        <ContentPresenter />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <!--  Hover effect  -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#454749" />
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#555759" />
+                                        </Trigger>
+                                        <!--  Selected item effect  -->
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#555759" />
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#656769" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <!--  Item Template  -->
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,5" Orientation="Horizontal">
+                            <!--  Task text  -->
+                            <TextBlock
+                                Width="260"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="White"
+                                Text="{Binding}" />
+
+
+                            <!--  Image for delete button  -->
+                            <Image
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
+                                
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="RemoveTaskTextBlock_Click"
+                                Source="/Assets/delete.png" />
+                                
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+        </StackPanel>
+    </Grid>
+</Window>
