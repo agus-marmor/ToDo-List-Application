@@ -28,10 +28,57 @@
         <Style TargetType="MenuItem">
             <Setter Property="Background" Value="#353739" />
             <Setter Property="Foreground" Value="White" />
-
+            <Setter Property="BorderBrush" Value="#454749" />
             <Setter Property="FontFamily" Value="Bahnschrift SemiLight Light" />
 
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1">
+                            <Grid>
+                                <!--  Main Content  -->
+                                <ContentPresenter
+                                    Margin="10,2"
+                                    VerticalAlignment="Center"
+                                    Content="{TemplateBinding Header}"
+                                    RecognizesAccessKey="True" />
+
+                                <!--  Submenu Items  -->
+                                <Popup
+                                    Name="SubMenuPopup"
+                                    IsOpen="{TemplateBinding IsSubmenuOpen}"
+                                    Placement="Bottom"
+                                    StaysOpen="False">
+                                    <Border Background="#454749">
+                                        <StackPanel>
+                                            <ItemsPresenter />
+                                        </StackPanel>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#454749" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#555759" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsSubmenuOpen" Value="True">
+                                <Setter Property="Background" Value="#555759" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
     </Window.Resources>
 
     <DockPanel>

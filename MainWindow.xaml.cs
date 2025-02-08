@@ -82,9 +82,12 @@ namespace ToDoListApp
 
         private void RemoveTaskTextBlock_Click(object sender, MouseButtonEventArgs e)
         {
-            if (sender is TextBlock textBlock && textBlock.DataContext is string task)
+          if(sender is Image deleteIcon)
             {
-                TaskList.Items.Remove(task);
+              if(deleteIcon.DataContext is string task)
+                {
+                    TaskList.Items.Remove(task);
+                }
             }
 
         }
